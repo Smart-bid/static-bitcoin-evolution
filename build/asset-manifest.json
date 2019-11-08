@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.81f8ef80.chunk.css",
+    "main.js": "/static/js/main.97bfb355.chunk.js",
+    "main.js.map": "/static/js/main.97bfb355.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.ae6e05e6.js",
+    "runtime~main.js.map": "/static/js/runtime~main.ae6e05e6.js.map",
+    "static/css/2.a4da56e7.chunk.css": "/static/css/2.a4da56e7.chunk.css",
+    "static/js/2.ef6d4ea6.chunk.js": "/static/js/2.ef6d4ea6.chunk.js",
+    "static/js/2.ef6d4ea6.chunk.js.map": "/static/js/2.ef6d4ea6.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.05c0f5aff286914440691ff4280ee3c9.js": "/precache-manifest.05c0f5aff286914440691ff4280ee3c9.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.a4da56e7.chunk.css.map": "/static/css/2.a4da56e7.chunk.css.map",
+    "static/css/main.81f8ef80.chunk.css.map": "/static/css/main.81f8ef80.chunk.css.map",
+    "static/media/index.scss": "/static/media/section4bg.a282fe22.jpg",
+    "static/media/countries.csv": "/static/media/countries.dac52b6c.csv",
+    "static/media/en_1.mp4": "/static/media/en_1.0b164d1b.mp4",
+    "static/media/excl.86ec05a0.svg": "/static/media/excl.86ec05a0.svg",
+    "static/media/main.css": "/static/media/flags@2x.7de34bf2.png",
+    "static/media/fr_video.mp4": "/static/media/fr_video.b5b1b1de.mp4",
+    "static/media/isabel.jpg": "/static/media/isabel.a28e0cd9.jpg"
+  }
+}
