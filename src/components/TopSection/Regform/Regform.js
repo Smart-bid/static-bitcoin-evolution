@@ -96,7 +96,6 @@ export default class Regform extends Component {
             }
 
             let submitResponse = this.props.validateParams(paramsToValidate);
-            console.log(this.props)
 
             if (submitResponse.success) {
                 this.props.handleForward(paramsToValidate);
@@ -213,7 +212,6 @@ export default class Regform extends Component {
 
             this.setState({ errorIndexes });
         }
-
         this.setState({[name]: value.replace(/^\s+|\s/g, ''), errors});
     };
 
@@ -231,7 +229,7 @@ export default class Regform extends Component {
 
         if (this.props.step <= 3) {
             return (
-                <div className={"Regform " + (this.props.class ? this.props.class : '')} ref={this.setTextInputRef}>
+                <div className={"Regform " + (this.props.class ? this.props.class : '')}>
                     <div className="steps">
                         {[1,2,3].map(index => {
                             if(index <= this.props.step-1) {
@@ -310,7 +308,7 @@ export default class Regform extends Component {
             )
         }else {
             return (
-                <div className={"Regform " + (this.props.class ? this.props.class : '')} ref={this.setTextInputRef}>
+                <div className={"Regform " + (this.props.class ? this.props.class : '')}>
                     <img src={logo} alt="lodaing" className="loading"/>
                 </div>
             )
