@@ -125,6 +125,9 @@ export default class Regform extends Component {
                 if (submitResponse.success) {
                     this.props.handleSubmit(paramsToValidate);
                     this.props.handleStep(this.props.step + 1);
+                    this.setState({
+                        errors: []
+                    });
                 }
                 else{
                     this.setState({
@@ -280,9 +283,9 @@ export default class Regform extends Component {
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
                         </div>
                         <div className='form-wrapper three'>
-                            {/*{this.state.errors && <div className="errors">
+                            {this.state.errors && <div className="errors">
                                 {this.state.errors[0]}
-                            </div>}*/}
+                            </div>}
                             <IntlTelInput
                                 preferredCountries={[this.props.countryCode]}
                                 containerClassName="intl-tel-input"
