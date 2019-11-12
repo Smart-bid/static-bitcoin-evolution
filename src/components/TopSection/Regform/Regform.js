@@ -194,15 +194,15 @@ export default class Regform extends Component {
         let errors = null;
         if (name === 'password') {
             const submitResponse = this.props.validateParams({
-                password: value,
+                password: value
             });
 
             let submitErrs = [];
             let staticErrors = [
-                "The password must be 8 characters long",
-                "Must contain at least 1 small letter",
-                "Must contain at least 1 number",
-                "Must contain at least 1 capital letter",
+                "Error: Password length must be between 6 to 8 characters",
+                "Error: Password should contain at least one small English letter",
+                "Error: Password should contain at least one number",
+                "Error: Password should contain at least one capital English letter",
             ];
 
             submitErrs.push(submitResponse.errors);
