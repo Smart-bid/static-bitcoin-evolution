@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LpFramework, {LpFrameworkWrapper} from '../lp-framework/dist/index'
+import { LpFramework, LpFrameworkWrapper } from 'sb-lp-framework';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <LpFramework
-        resourceFile={require('./languages.json')}
+        resourceFile={require('./resources/languages.json')}
         funnel_name={"test"}>
         <LpFrameworkWrapper Component={App}/>
     </LpFramework>,

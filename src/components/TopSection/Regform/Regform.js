@@ -23,7 +23,9 @@ export default class Regform extends Component {
             agree_2: true,
             firstPassType: 'password',
             secondPassType: 'password',
-            errorIndexes: [0,1,2,3]
+            errorIndexes: [0,1,2,3],
+            errors: '',
+            passErrors: {}
         };
 
         this.handleBackwards = this.handleBackwards.bind(this);
@@ -70,20 +72,19 @@ export default class Regform extends Component {
                 agree_2: this.state.agree_2,
                 funnel_name: window.location.origin,
             };
-            let submitResponse = this.props.validateParams(paramsToValidate);
+            let checkParams = this.props.validateParams(paramsToValidate);
 
-            if (submitResponse.success) {
-                this.props.handleForward(paramsToValidate);
-                this.props.handleStep(this.props.step + 1);
-            }
-            else{
+            if (checkParams.success) {
+                this.props.setLeadData(paramsToValidate).then(this.props.handleLeadStep(), this.props.handleStep(this.props.step + 1));
+            } else {
+                const fieldWithMessages = Object.keys(checkParams.errors).find(field => checkParams.errors[field].hasOwnProperty('messages'));
+                const firstError = checkParams.errors[fieldWithMessages].messages[0];
                 this.setState({
-                    errors: submitResponse.errors
+                    errors: firstError
                 })
             }
         }
         else if (this.props.step === 2){
-
             if (this.state.confirm_password === this.state.password) {
                 paramsToValidate = {
                     password: this.state.password
@@ -95,11 +96,12 @@ export default class Regform extends Component {
                 return this.state.errors
             }
 
-            let submitResponse = this.props.validateParams(paramsToValidate);
+            let submitPassword = this.props.validateParams(paramsToValidate);
 
-            if (submitResponse.success) {
-                this.props.handleForward(paramsToValidate);
-                this.props.handleStep(this.props.step + 1);
+            if (submitPassword.success) {
+                this.props.setLeadData(paramsToValidate).then(this.props.handleLeadStep(), this.props.handleStep(this.props.step + 1));
+            } else {
+                /*console.log(submitPassword.errors);*/
             }
         }
 
@@ -123,16 +125,12 @@ export default class Regform extends Component {
 
                 let submitResponse = this.props.validateParams(paramsToValidate);
                 if (submitResponse.success) {
-                    this.props.handleSubmit(paramsToValidate);
-                    this.props.handleStep(this.props.step + 1);
-                    this.setState({
-                        errors: []
-                    });
+                    this.props.setLeadData(paramsToValidate).then(this.props.handleLeadStep(), this.props.handleSubmit());
                 }
                 else{
                     this.setState({
                         errors: submitResponse.errors
-                    })
+                    }, () => console.log(this.state.errors))
                 }
             } else {
                 this.setState({
@@ -193,11 +191,17 @@ export default class Regform extends Component {
     handleStepChange = (name, value) => {
         let errors = null;
         if (name === 'password') {
-            const submitResponse = this.props.validateParams({
+            const checkPassword = this.props.validateParams({
                 password: value
             });
 
-            let submitErrs = [];
+            if (checkPassword.messages) {
+                return;
+            } else {
+                console.log(checkPassword.errors);
+            }
+
+            /*let submitErrs = [];
             let staticErrors = [
                 "Error: Password length must be between 6 to 8 characters",
                 "Error: Password should contain at least one small English letter",
@@ -213,7 +217,7 @@ export default class Regform extends Component {
                 return errorsIndexesArray;
             }, []);
 
-            this.setState({ errorIndexes });
+            this.setState({ errorIndexes });*/
         }
         this.setState({[name]: value.replace(/^\s+|\s/g, ''), errors});
     };
@@ -249,7 +253,7 @@ export default class Regform extends Component {
                     <div className='inner'>
                         <div className='form-wrapper one'>
                             {this.state.errors && <div className="errors">
-                                {this.state.errors[0]}
+                                {this.state.errors}
                             </div>}
                             <input className="inputfield fname" type="text" name="first_name" placeholder={languageManager.fname} value={first_name} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)}/>
                             <input className="inputfield lname" type="text" name="last_name" placeholder={languageManager.lname} value={last_name} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)}/>

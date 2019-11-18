@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactQueryParams from 'react-query-params'
 
-
 import TopSection from './components/TopSection/TopSection'
 import MidSection from './components/MidSection/MidSection'
 import BottomSection from './components/BottomSection/BottomSection'
@@ -10,7 +9,7 @@ import Page from './pages/Page'
 // Pages
 import * as Pages from './pages'
 
-export default class App extends ReactQueryParams {
+export default class App extends Component {
     constructor(props) {
         super(props);
 
@@ -21,21 +20,20 @@ export default class App extends ReactQueryParams {
 
         this.handleStep = this.handleStep.bind(this);
         this.pageHandler = this.pageHandler.bind(this);
-        this.handleForward = this.handleForward.bind(this);
     }
 
     handleStep = (step) => {
         this.setState({step})
     };
 
-    handleForward = (params) => {
+    /*handleForward = (params) => {
         this.props.handleLeadStep(params);
     };
 
     handleSubmit = (params) => {
         this.props.onSubmit(params)
         .then(() => this.setState({ step: 1 }))
-    };
+    };*/
 
     pageHandler(page) {
         window.scrollTo(0, 0);
@@ -68,15 +66,7 @@ export default class App extends ReactQueryParams {
         if (this.state.page === 'main') {
             return (
                 <div className='App'>
-                    <TopSection
-                                countryCode={this.props.countryCode}
-                                handleStep={this.handleStep}
-                                step={this.state.step}
-                                handleSubmit={this.handleSubmit}
-                                pageHandler={this.pageHandler}
-                                handleForward={this.handleForward}
-                                languageManager={this.props.languageManager}
-                                validateParams={this.props.validateParams}/>
+                    <TopSection {...this.props} handleStep={this.handleStep} step={this.state.step}/>
 
                     <MidSection languageManager={this.props.languageManager}/>
 
