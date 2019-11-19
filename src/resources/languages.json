@@ -42,12 +42,12 @@
     "pass2": "Confirm Password",
     "button": "Next >",
     "button_last": "REGISTER NOW",
-    "passtest": [
-      "The password must be 8 characters long.",
-      "Must contain at least 1 letter.",
-      "Must contain at least 1 number.",
-      "Must contain at least 1 capital letter."
-    ],
+    "passtest": {
+      "invalidlength": "The password must be 8 characters long.",
+      "nolowercase": "Must contain at least 1 letter.",
+      "nonumber": "Must contain at least 1 number.",
+      "nouppercase": "Must contain at least 1 capital letter."
+    },
     "morebox": "Example: 12John34",
     "bcbid": [
       "bid",
@@ -1958,12 +1958,12 @@
     "pass2": "Adgangskode (gentag)",
     "button": "Næste >>",
     "button_last": "Tilmeld dig nu",
-    "passtest": [
-      "Adgangskoden skal have en længde på 8 tegn.",
-      "Skal indeholde mindst 1 bogstav.",
-      "Skal indeholde mindst 1 tal.",
-      "Skal indeholde mindst 1 store bogstaver."
-    ],
+    "passtest": {
+      "invalidlength": "Adgangskoden skal have en længde på 8 tegn.",
+      "nolowercase": "Skal indeholde mindst 1 bogstav.",
+      "nonumber": "Skal indeholde mindst 1 tal.",
+      "nouppercase": "Skal indeholde mindst 1 store bogstaver."
+    },
     "morebox": "Eksempel: 12John34",
     "bcbid": [
       "bid",

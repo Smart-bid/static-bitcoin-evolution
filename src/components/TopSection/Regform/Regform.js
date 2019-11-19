@@ -25,7 +25,12 @@ export default class Regform extends Component {
             secondPassType: 'password',
             errorIndexes: [0,1,2,3],
             errors: '',
-            passErrors: {}
+            passwordErrors: {
+                invalidlength: true,
+                nolowercase: true,
+                nonumber: true,
+                nouppercase: true
+            }
         };
 
         this.handleBackwards = this.handleBackwards.bind(this);
@@ -100,8 +105,6 @@ export default class Regform extends Component {
 
             if (submitPassword.success) {
                 this.props.setLeadData(paramsToValidate).then(this.props.handleLeadStep(), this.props.handleStep(this.props.step + 1));
-            } else {
-                /*console.log(submitPassword.errors);*/
             }
         }
 
@@ -123,14 +126,14 @@ export default class Regform extends Component {
                     phone_country_prefix: this.state.phone_country_prefix
                 };
 
-                let submitResponse = this.props.validateParams(paramsToValidate);
-                if (submitResponse.success) {
-                    this.props.setLeadData(paramsToValidate).then(this.props.handleLeadStep(), this.props.handleSubmit());
+                let submitPhone = this.props.validateParams(paramsToValidate);
+                if (submitPhone.success) {
+                    this.props.setLeadData(paramsToValidate).then(this.props.handleSubmit(), this.props.handleLeadStep(1));
                 }
                 else{
                     this.setState({
-                        errors: submitResponse.errors
-                    }, () => console.log(this.state.errors))
+                        errors: submitPhone.errors
+                    })
                 }
             } else {
                 this.setState({
@@ -195,29 +198,11 @@ export default class Regform extends Component {
                 password: value
             });
 
-            if (checkPassword.messages) {
-                return;
-            } else {
-                console.log(checkPassword.errors);
+            if (checkPassword.errors) {
+                this.setState({
+                    passwordErrors:  checkPassword.errors.password
+                })
             }
-
-            /*let submitErrs = [];
-            let staticErrors = [
-                "Error: Password length must be between 6 to 8 characters",
-                "Error: Password should contain at least one small English letter",
-                "Error: Password should contain at least one number",
-                "Error: Password should contain at least one capital English letter",
-            ];
-
-            submitErrs.push(submitResponse.errors);
-
-            const errorIndexes = submitErrs[0].reduce((errorsIndexesArray, error) => {
-                const errorIndex = staticErrors.indexOf(error);
-                errorsIndexesArray.push(errorIndex);
-                return errorsIndexesArray;
-            }, []);
-
-            this.setState({ errorIndexes });*/
         }
         this.setState({[name]: value.replace(/^\s+|\s/g, ''), errors});
     };
@@ -280,8 +265,10 @@ export default class Regform extends Component {
                                 <span onClick={this.handleClick} data-type="secondPassType" className={this.state.secondPassType === 'password' ? 'show-pass' : 'hide-pass'}></span>
                             </div>
                             <ul className='req'>
-                                {languageManager.passtest.map((li, index) => {
-                                    return (<li key={index} className={this.state.errorIndexes.includes(index) ? 'list' : 'ok'}>{li}</li>)
+                                {Object.keys(languageManager.passtest).map((validationRule, index) => {
+                                    return (<li key={index} id={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
+                                        {languageManager.passtest[validationRule]}
+                                    </li>)
                                 })}
                             </ul>
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
@@ -294,6 +281,7 @@ export default class Regform extends Component {
                                 preferredCountries={[this.props.countryCode]}
                                 containerClassName="intl-tel-input"
                                 inputClassName="inputfield tel"
+                                defaultCountry={this.state.phone_country_prefix}
                                 autoPlaceholder={true}
                                 separateDialCode={true}
                                 onSelectFlag={this.handleSelectFlag}
