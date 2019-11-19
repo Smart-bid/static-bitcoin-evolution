@@ -234,12 +234,12 @@
     "pass2": "Passordet (Gjenta)",
     "button": "Neste > >",
     "button_last": "Registrer deg nå",
-    "passtest": [
-      "Passordet må ha en lengde på 8 tegn.",
-      "Må inneholde minst 1 bokstav.",
-      "Må inneholde minst 1 siffer.",
-      "Må inneholde minst 1 stor bokstav"
-    ],
+    "passtest": {
+      "invalidlength": "Passordet må ha en lengde på 8 tegn.",
+      "nolowercase": "Må inneholde minst 1 bokstav.",
+      "nonumber": "Må inneholde minst 1 siffer.",
+      "nouppercase": "Må inneholde minst 1 stor bokstav"
+    },
     "morebox": "Eksempel: 12John34",
     "bcbid": [
       "bid",
@@ -426,12 +426,12 @@
     "pass2": "Lösenord (upprepa)",
     "button": "Nästa > >",
     "button_last": "Registrera dig nu",
-    "passtest": [
-      "Lösenordet måste vara 8 tecken långt.",
-      "Måste innehålla minst 1 bokstav.",
-      "Måste innehålla minst 1 siffra.",
-      "Måste innehålla minst 1 versal."
-    ],
+    "passtest": {
+      "invalidlength": "Lösenordet måste vara 8 tecken långt.",
+      "nolowercase": "Måste innehålla minst 1 bokstav.",
+      "nonumber": "Måste innehålla minst 1 siffra.",
+      "nouppercase": "Måste innehålla minst 1 versal."
+    },
     "morebox": "Exempel: 12John34",
     "bcbid": [
       "bid",
@@ -618,12 +618,12 @@
     "pass2": "Salasana (uudelleen)",
     "button": "Seuraava > >",
     "button_last": "Rekisteröidy nyt",
-    "passtest": [
-      "Salasanan on oltava 8 merkkiä pitkä.",
-      "On oltava vähintään yksi kirjain.",
-      "Sisältää vähintään yhden numeron.",
-      "Täytyy sisältää vähintään yksi iso kirjain."
-    ],
+    "passtest": {
+      "invalidlength": "Salasanan on oltava 8 merkkiä pitkä.",
+      "nolowercase": "On oltava vähintään yksi kirjain.",
+      "nonumber": "Sisältää vähintään yhden numeron.",
+      "nouppercase": "Täytyy sisältää vähintään yksi iso kirjain."
+    },
     "morebox": "esimerkki: 12John34",
     "bcbid": [
       "bid",
@@ -810,12 +810,12 @@
     "pass2": "Wachtwoord (herhaal)",
     "button": "Volgende > >",
     "button_last": "REGISTREER NU",
-    "passtest": [
-      "Het wachtwoord moet 8 tekens lang zijn.",
-      "Moet minimaal 1 letter bevatten.",
-      "Moet minimaal 1 nummer bevatten.",
-      "Moet ten minste 1 hoofdletter bevatten."
-    ],
+    "passtest": {
+      "invalidlength": "Het wachtwoord moet 8 tekens lang zijn.",
+      "nolowercase": "Moet minimaal 1 letter bevatten.",
+      "nonumber": "Moet minimaal 1 nummer bevatten.",
+      "nouppercase": "Moet ten minste 1 hoofdletter bevatten."
+    },
     "morebox": "Voorbeeld: 12John34",
     "bcbid": [
       "bid",
@@ -1002,12 +1002,12 @@
     "pass2": "Contraseña (repetir)",
     "button": "Siguiente > >",
     "button_last": "Regístrate ahora",
-    "passtest": [
-      "La contraseña debe tener entre 8 caracteres.",
-      "Debe contener al menos 1 letra.",
-      "Debe contener al menos 1 número.",
-      "Debe contener al menos 1 letra mayúscula."
-    ],
+    "passtest": {
+      "invalidlength": "La contraseña debe tener entre 8 caracteres.",
+      "nolowercase": "Debe contener al menos 1 letra.",
+      "nonumber": "Debe contener al menos 1 número.",
+      "nouppercase": "Debe contener al menos 1 letra mayúscula."
+    },
     "morebox": "Ejemplo: 12John34",
     "bcbid": [
       "bid",
@@ -1192,12 +1192,12 @@
     "pass2": "Password (ripetizione)",
     "button": "ISCRIVITI GRATIS > >",
     "button_last": "Iscriviti subito",
-    "passtest": [
-      "La password deve essere lunga 8 caratteri.",
-      "Deve contenere almeno una lettera.",
-      "Deve contenere almeno un numero.",
-      "Deve contenere almeno 1 lettera maiuscola."
-    ],
+    "passtest": {
+      "invalidlength": "La password deve essere lunga 8 caratteri.",
+      "nolowercase": "Deve contenere almeno una lettera.",
+      "nonumber": "Deve contenere almeno un numero.",
+      "nouppercase": "Deve contenere almeno 1 lettera maiuscola."
+    },
     "morebox": "Esempio: 12John34",
     "bcbid": [
       "bid",
@@ -1383,12 +1383,12 @@
     "pass2": "Hasło (Powtórz)",
     "button": "Dalej > >",
     "button_last": "Zarejestruj się teraz",
-    "passtest": [
-      "Hasło musi składać się z 8 znaków.",
-      "Musi zawierać co najmniej 1 literę.",
-      "Musi zawierać co najmniej 1 numer.",
-      "Musi zawierać co najmniej 1 wielką literę."
-    ],
+    "passtest": {
+      "invalidlength": "Hasło musi składać się z 8 znaków.",
+      "nolowercase": "Musi zawierać co najmniej 1 literę.",
+      "nonumber": "Musi zawierać co najmniej 1 numer.",
+      "nouppercase": "Musi zawierać co najmniej 1 wielką literę."
+    },
     "morebox": "Przykład: 12John34",
     "bcbid": [
       "bid",
@@ -1574,12 +1574,12 @@
     "pass2": "Passwort wiederholen",
     "button": "WEITER >",
     "button_last": "Beitreten!",
-    "passtest": [
-      "Das Passwort muss 8 Zeichen lang sein.",
-      "Muss mindestens 1 Buchstabe enthalten.",
-      "Muss mindestens 1 Zahl enthalten.",
-      "Muss mindestens 1 Großbuchstabe enthalten."
-    ],
+    "passtest": {
+      "invalidlength": "Das Passwort muss 8 Zeichen lang sein.",
+      "nolowercase": "Muss mindestens 1 Buchstabe enthalten.",
+      "nonumber": "Muss mindestens 1 Zahl enthalten.",
+      "nouppercase": "Muss mindestens 1 Großbuchstabe enthalten."
+    },
     "morebox": "Beispiel: 12John34",
     "bcbid": [
       "bid",
@@ -1766,12 +1766,12 @@
     "pass2": "Mot de passe (répétez)",
     "button": "COMMENCEZ À TRADER!",
     "button_last": "COMMENCEZ À TRADER!",
-    "passtest": [
-      "Le mot de passe doit comporter entre 8 caractères.",
-      "Doit contenir au moins 1 lettre.",
-      "Doit contenir au moins 1 chiffre.",
-      "Doit contenir au moins 1 lettre majuscule."
-    ],
+    "passtest": {
+      "invalidlength": "Le mot de passe doit comporter entre 8 caractères.",
+      "nolowercase": "Doit contenir au moins 1 lettre.",
+      "nonumber": "Doit contenir au moins 1 chiffre.",
+      "nouppercase": "Doit contenir au moins 1 lettre majuscule."
+    },
     "morebox": "Exemple: 12John34",
     "bcbid": [
       "bid",

@@ -24,13 +24,13 @@ export default class Regform extends Component {
             agree_2: true,
             firstPassType: 'password',
             secondPassType: 'password',
-            errorIndexes: [0,1,2,3],
             errors: '',
             passwordErrors: {
                 invalidlength: true,
                 nolowercase: true,
                 nonumber: true,
-                nouppercase: true
+                nouppercase: true,
+                empty: true
             }
         };
 
@@ -48,7 +48,6 @@ export default class Regform extends Component {
     };
 
     handleSelectFlag = (num, country) => {
-        console.log(country.iso2);
         this.setState({
             phone_country_prefix: '+' + `${country.dialCode}`,
             country_name: country.iso2
@@ -128,7 +127,6 @@ export default class Regform extends Component {
                     phone_number: phone_number,
                     phone_country_prefix: this.state.phone_country_prefix
                 };
-                console.log(paramsToValidate);
                 let submitPhone = this.props.validateParams(paramsToValidate);
                 if (submitPhone.success) {
                     this.props.setLeadData(paramsToValidate).then(this.props.handleSubmit(), this.props.handleStep(this.props.step + 1));
@@ -190,7 +188,7 @@ export default class Regform extends Component {
         forms.map(form => {
             let steps = [...form.querySelectorAll('.form-wrapper')];
             steps.map((step, index) => {
-                if (index+1 === this.props.step-1) {
+                if (index+1 === this.props.step - 1) {
                     step.classList.add('step');
                 }
             })
@@ -272,7 +270,7 @@ export default class Regform extends Component {
                             </div>
                             <ul className='req'>
                                 {Object.keys(languageManager.passtest).map((validationRule, index) => {
-                                    return (<li key={index} id={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
+                                    return (<li key={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
                                         {languageManager.passtest[validationRule]}
                                     </li>)
                                 })}
