@@ -26,14 +26,10 @@ export default class App extends Component {
         this.setState({step})
     };
 
-    /*handleForward = (params) => {
-        this.props.handleLeadStep(params);
-    };
-
-    handleSubmit = (params) => {
-        this.props.onSubmit(params)
+    handleSubmit = () => {
+        this.props.handleSubmit()
         .then(() => this.setState({ step: 1 }))
-    };*/
+    };
 
     pageHandler(page) {
         window.scrollTo(0, 0);
@@ -66,7 +62,7 @@ export default class App extends Component {
         if (this.state.page === 'main') {
             return (
                 <div className='App'>
-                    <TopSection {...this.props} handleStep={this.handleStep} step={this.state.step}/>
+                    <TopSection {...this.props} handleStep={this.handleStep} handleSubmit={this.handleSubmit} step={this.state.step}/>
 
                     <MidSection languageManager={this.props.languageManager}/>
 

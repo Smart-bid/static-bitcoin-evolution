@@ -18,6 +18,7 @@ export default class Regform extends Component {
             password: "",
             confirm_password: "",
             phone_country_prefix: "",
+            country_name: "",
             tel: "",
             agree_1: true,
             agree_2: true,
@@ -47,16 +48,18 @@ export default class Regform extends Component {
     };
 
     handleSelectFlag = (num, country) => {
-
+        console.log(country.iso2);
         this.setState({
-            phone_country_prefix: '+' + `${country.dialCode}`
+            phone_country_prefix: '+' + `${country.dialCode}`,
+            country_name: country.iso2
         })
 
     };
 
     phoneNumberBlur = (status, value, countryData) => {
         this.setState({
-            phone_country_prefix: '+' + `${countryData.dialCode}`
+            phone_country_prefix: '+' + `${countryData.dialCode}`,
+            country_name: countryData.iso2
         })
     }
 
@@ -125,10 +128,13 @@ export default class Regform extends Component {
                     phone_number: phone_number,
                     phone_country_prefix: this.state.phone_country_prefix
                 };
-
+                console.log(paramsToValidate);
                 let submitPhone = this.props.validateParams(paramsToValidate);
                 if (submitPhone.success) {
-                    this.props.setLeadData(paramsToValidate).then(this.props.handleSubmit(), this.props.handleLeadStep(1));
+                    this.props.setLeadData(paramsToValidate).then(this.props.handleSubmit(), this.props.handleStep(this.props.step + 1));
+                    this.setState({
+                        errors: []
+                    });
                 }
                 else{
                     this.setState({
@@ -281,7 +287,7 @@ export default class Regform extends Component {
                                 preferredCountries={[this.props.countryCode]}
                                 containerClassName="intl-tel-input"
                                 inputClassName="inputfield tel"
-                                defaultCountry={this.state.phone_country_prefix}
+                                defaultCountry={this.state.country_name}
                                 autoPlaceholder={true}
                                 separateDialCode={true}
                                 onSelectFlag={this.handleSelectFlag}
