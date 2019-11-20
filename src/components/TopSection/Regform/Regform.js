@@ -30,7 +30,7 @@ export default class Regform extends Component {
                 nolowercase: true,
                 nonumber: true,
                 nouppercase: true,
-                empty: true
+                empty: false
             }
         };
 
@@ -270,9 +270,15 @@ export default class Regform extends Component {
                             </div>
                             <ul className='req'>
                                 {Object.keys(languageManager.passtest).map((validationRule, index) => {
-                                    return (<li key={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
-                                        {languageManager.passtest[validationRule]}
-                                    </li>)
+                                    if (this.state.password.length === 0) {
+                                        return (<li key={index} className={'list'}>
+                                            {languageManager.passtest[validationRule]}
+                                        </li>)
+                                    } else {
+                                        return (<li key={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
+                                            {languageManager.passtest[validationRule]}
+                                        </li>)
+                                    }
                                 })}
                             </ul>
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
