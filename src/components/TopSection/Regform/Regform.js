@@ -269,17 +269,15 @@ export default class Regform extends Component {
                                 <span onClick={this.handleClick} data-type="secondPassType" className={this.state.secondPassType === 'password' ? 'show-pass' : 'hide-pass'}></span>
                             </div>
                             <ul className='req'>
-                                {Object.keys(languageManager.passtest).map((validationRule, index) => {
-                                    if (this.state.password.length === 0) {
-                                        return (<li key={index} className={'list'}>
-                                            {languageManager.passtest[validationRule]}
-                                        </li>)
-                                    } else {
-                                        return (<li key={index} className={this.state.passwordErrors[validationRule] ? 'list' : 'ok'}>
-                                            {languageManager.passtest[validationRule]}
-                                        </li>)
-                                    }
-                                })}
+                                {Object.keys(languageManager.passtest).map((validationRule, index) =>
+                                    <li key={index} className={
+                                        this.state.passwordErrors[validationRule] || !this.state.password.length
+                                            ? 'list'
+                                            : 'ok'
+                                    }>
+                                        {languageManager.passtest[validationRule]}
+                                    </li>
+                                )}
                             </ul>
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
                         </div>
