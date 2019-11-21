@@ -29,8 +29,7 @@ export default class Regform extends Component {
                 invalidlength: true,
                 nolowercase: true,
                 nonumber: true,
-                nouppercase: true,
-                empty: false
+                nouppercase: true
             }
         };
 
