@@ -62,7 +62,7 @@ export default class App extends Component {
         if (this.state.page === 'main') {
             return (
                 <div className='App'>
-                    <TopSection {...this.props} handleStep={this.handleStep} handleSubmit={this.handleSubmit} step={this.state.step}/>
+                    <TopSection {...this.props} handleStep={this.handleStep} step={this.state.step}/>
 
                     <MidSection languageManager={this.props.languageManager}/>
 
