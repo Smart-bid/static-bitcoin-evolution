@@ -75,8 +75,7 @@ export default class Regform extends Component {
                 email: this.state.email,
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
-                agree_2: this.state.agree_2,
-                funnel_name: window.location.origin,
+                agree_2: this.state.agree_2
             };
             let checkParams = this.props.validateParams(paramsToValidate);
 
@@ -128,15 +127,16 @@ export default class Regform extends Component {
                 };
                 let submitPhone = this.props.validateParams(paramsToValidate);
                 if (submitPhone.success) {
-                    this.props.setLeadData(paramsToValidate).then(this.props.handleSubmit(), this.props.handleStep(this.props.step + 1));
-                    this.setState({
+                    this.props.setLeadData(paramsToValidate)
+                        .then(this.props.handleSubmit());
+                    /*this.setState({
                         errors: []
-                    });
+                    });*/
                 }
                 else{
                     this.setState({
                         errors: submitPhone.errors
-                    })
+                    }, () => {console.log(this.state.errors)})
                 }
             } else {
                 this.setState({
@@ -311,10 +311,18 @@ export default class Regform extends Component {
         }else {
             return (
                 <div className={"Regform " + (this.props.class ? this.props.class : '')}>
-                    <img src={logo} alt="lodaing" className="loading"/>
+                    {
+                        (this.props.responseError) ?
+                            <div className="response-error">
+                                <p>{this.props.responseError}</p>
+                                <button className="submit_btn gtd-form-submit" onClick={()=>this.setState({loading:false})}>Ok</button>
+                            </div>
+                            : <div className={"Regform " + (this.props.class ? this.props.class : '')}>
+                                <img src={logo} alt="lodaing" className="loading"/>
+                            </div>
+                    }
                 </div>
             )
-
         }
     }
 }

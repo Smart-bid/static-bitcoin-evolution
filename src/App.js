@@ -28,7 +28,9 @@ export default class App extends Component {
 
     handleSubmit = () => {
         this.props.handleSubmit()
-        .then(() => this.setState({ step: 1 }))
+            .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}))
+            .then(() => this.handleStep(this.state.step + 1))
+        /*.then(() => this.setState({ step: 1 }))*/
     };
 
     pageHandler(page) {
