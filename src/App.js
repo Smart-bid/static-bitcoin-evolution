@@ -28,9 +28,7 @@ export default class App extends Component {
 
     handleSubmit = () => {
         this.props.handleSubmit()
-            .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}))
-            .then(() => this.handleStep(this.state.step + 1))
-        /*.then(() => this.setState({ step: 1 }))*/
+        .then(() => this.setState({ step: 1 }))
     };
 
     pageHandler(page) {
@@ -64,7 +62,7 @@ export default class App extends Component {
         if (this.state.page === 'main') {
             return (
                 <div className='App'>
-                    <TopSection {...this.props} handleStep={this.handleStep} handleSubmit={this.handleSubmit} step={this.state.step}/>
+                    <TopSection {...this.props} handleStep={this.handleStep} step={this.state.step}/>
 
                     <MidSection languageManager={this.props.languageManager}/>
 

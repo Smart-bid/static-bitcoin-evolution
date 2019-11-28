@@ -5,6 +5,8 @@ import 'react-intl-tel-input/dist/main.css'
 import { ReactComponent as Mark } from './excl.svg'
 import logo from '../../BottomSection/logo.png'
 
+import { Link } from 'react-router-dom'
+
 
 export default class Regform extends Component {
     constructor(props) {
@@ -75,7 +77,8 @@ export default class Regform extends Component {
                 email: this.state.email,
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
-                agree_2: this.state.agree_2
+                agree_2: this.state.agree_2,
+                funnel_name: window.location.origin,
             };
             let checkParams = this.props.validateParams(paramsToValidate);
 
@@ -124,19 +127,22 @@ export default class Regform extends Component {
                 paramsToValidate = {
                     phone_number: phone_number,
                     phone_country_prefix: this.state.phone_country_prefix
-                };
+                }
+
+                this.props.handleStep(this.props.step + 1)
                 let submitPhone = this.props.validateParams(paramsToValidate);
                 if (submitPhone.success) {
                     this.props.setLeadData(paramsToValidate)
-                        .then(this.props.handleSubmit());
-                    /*this.setState({
+                        .then(this.props.handleSubmit)
+                        .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
+                    this.setState({
                         errors: []
-                    });*/
+                    });
                 }
                 else{
                     this.setState({
                         errors: submitPhone.errors
-                    }, () => {console.log(this.state.errors)})
+                    })
                 }
             } else {
                 this.setState({
@@ -310,19 +316,17 @@ export default class Regform extends Component {
             )
         }else {
             return (
-                <div className={"Regform " + (this.props.class ? this.props.class : '')}>
-                    {
-                        (this.props.responseError) ?
-                            <div className="response-error">
-                                <p>{this.props.responseError}</p>
-                                <button className="submit_btn gtd-form-submit" onClick={()=>this.setState({loading:false})}>Ok</button>
-                            </div>
-                            : <div className={"Regform " + (this.props.class ? this.props.class : '')}>
-                                <img src={logo} alt="lodaing" className="loading"/>
-                            </div>
-                    }
+                <div className="Regform">
+                    {(this.props.step === 4) ? <img src={logo} alt="lodaing" className="loading"/> : 
+
+                    <div className='column'>
+                        <span className="response_error">{this.state.responseError}</span>
+                        <button className='start' onClick={() => this.props.handleStep(1)}>OK</button>
+                    </div>}
+                    
                 </div>
             )
+
         }
     }
 }
