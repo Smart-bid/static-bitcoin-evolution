@@ -9,6 +9,7 @@ lp-framework/node_modules
 /.pnp
 .pnp.js
 .idea
+.circleci
 
 # testing
 /coverage
