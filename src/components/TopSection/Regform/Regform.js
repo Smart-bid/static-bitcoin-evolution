@@ -13,6 +13,11 @@ export default class Regform extends Component {
         super(props);
 
         this.state = {
+            firstPassType: 'password',
+            secondPassType: 'password',
+        }
+
+        /*this.state = {
             first_name: "",
             last_name: "",
             email: "",
@@ -33,10 +38,41 @@ export default class Regform extends Component {
                 nonumber: true,
                 nouppercase: true
             }
-        };
+        };*/
 
-        this.handleBackwards = this.handleBackwards.bind(this);
-        this.handleSync = this.handleSync.bind(this);
+        this.tooltips = {};
+        this.passtest =  {};
+
+        ['invalidlength', 'nospecial', 'nolowercase', 'nouppercase', 'nonumber'].map((err, index) => this.passtest[err] = this.props.languageManager().passtest[index])
+
+    }
+
+    updateValue = (value, key, callback) => {
+        let obj = {},
+            tempForm = this.props.syncState.form
+        obj[key] = value
+        Object.assign(tempForm, obj)
+
+        new Promise((resolve, reject) => resolve(this.props.syncForms(tempForm))).then(callback)
+    }
+
+    handleForward = () => {
+        let validateParams = this.props.validateParams(this.props.syncState.form);
+
+        if (validateParams.success) this.props.setLeadData(this.props.syncState.form)
+            .then(this.props.handleStep(this.props.syncState.step + 1))
+            .then(() => { if (this.props.syncState.step === 2) this.props.handleLeadStep() })
+            .then(() => this.props.syncErrors({password: {empty: true}}))
+        else this.props.syncErrors(validateParams.errors)
+    }
+
+    handleSubmit = () => {
+        this.props.handleStep(this.props.syncState.step + 1)
+
+        this.props.setLeadData(this.props.syncState.form)
+            .then(this.props.handleSubmit)
+            .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.props.syncErrors({responseError: res.error}))
+            .then(this.props.handleStep(5))
     }
 
     handleClick = (e) => {
@@ -67,7 +103,7 @@ export default class Regform extends Component {
         return !/[^0-9\-\/]/.test(value);
     }
 
-    handleForward = (e) => {
+    /*handleForward = (e) => {
         let form = e.target.parentElement;
         let paramsToValidate = {};
 
@@ -151,24 +187,8 @@ export default class Regform extends Component {
                 return this.state.errors
             }
         }
-    };
+    };*/
 
-    handleBackwards(e) {
-        e.preventDefault();
-        let back = parseInt(e.target.getAttribute('index'));
-        let forms = [...document.querySelectorAll('.Regform')];
-
-        forms.map(form => {
-            let steps = [...form.querySelectorAll('.form-wrapper')];
-            steps.map((step, index) => {
-                for (let i=0;i<=back;i++) {
-                    step.classList.remove('step');
-                }
-            })
-        });
-
-        this.props.handleStep(parseInt(e.target.getAttribute('index')));
-    }
 
     handleSync(e) {
         let input = e.target.value;
@@ -218,24 +238,16 @@ export default class Regform extends Component {
 
 
     render() {
-        const { 
-          first_name,
-          last_name,
-          email,
-          password,
-          confirm_password,
-          tel
-        } = this.state;
         let languageManager = this.props.languageManager();
 
-        if (this.props.step <= 3) {
+        if (this.props.syncState.step <= 3) {
             return (
                 <div className={"Regform " + (this.props.class ? this.props.class : '')}>
                     <div className="steps">
                         {[1,2,3].map(index => {
-                            if(index <= this.props.step-1) {
+                            if(index <= this.props.syncState.step - 1) {
                                 return (
-                                    <div className="num check" key={index} index={index} onClick={this.handleBackwards}>✓</div>
+                                    <div className="num check" key={index} index={index} onClick={() => this.props.handleStep(index)}>✓</div>
                                 )
                             } else {
                                 return (
@@ -245,21 +257,21 @@ export default class Regform extends Component {
                         })}
                     </div>
                     <div className='inner'>
-                        <div className='form-wrapper one'>
+                        <div className={'form-wrapper '+ ((this.props.syncState.step > 1) ? ' step' : '')}>
                             {this.state.errors && <div className="errors">
                                 {this.state.errors}
                             </div>}
-                            <input className="inputfield fname" type="text" name="first_name" placeholder={languageManager.fname} value={first_name} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)}/>
-                            <input className="inputfield lname" type="text" name="last_name" placeholder={languageManager.lname} value={last_name} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)}/>
-                            <input className="inputfield email" type="text" name="email" placeholder={languageManager.email} autoComplete='off' value={email} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)}/>
+                            <input className="inputfield fname" type="text" name="first_name" placeholder={languageManager.fname} value={this.props.syncState.form.first_name} onChange={(e) => this.updateValue(e.target.value, e.target.name)}/>
+                            <input className="inputfield lname" type="text" name="last_name" placeholder={languageManager.lname} value={this.props.syncState.form.last_name} onChange={(e) => this.updateValue(e.target.value, e.target.name)}/>
+                            <input className="inputfield email" type="text" name="email" placeholder={languageManager.email} autoComplete='off' value={this.props.syncState.form.email} onChange={(e) => this.updateValue(e.target.value, e.target.name)}/>
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
                         </div>
-                        <div className='form-wrapper two'>
+                        <div className={'form-wrapper'  + ((this.props.syncState.step > 2) ? ' step' : '')}>
                             {/*{this.state.errors && <div className="errors">
                                 {this.state.errors[0]}
                             </div>}*/}
                             <div className="forw-wrapper_input">
-                                <input className="inputfield pass" type={this.state.firstPassType} maxLength="8" value={password} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)} name="password" placeholder={languageManager.pass}/>
+                                <input className="inputfield pass" type={this.state.firstPassType} maxLength="8" value={this.props.syncState.form.password} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)} name="password" placeholder={languageManager.pass}/>
                                 <span onClick={this.handleClick} data-type="firstPassType" className={this.state.firstPassType === 'password' ? 'show-pass' : 'hide-pass'}></span>
                             </div>
                             <div className="help-block">
@@ -270,11 +282,14 @@ export default class Regform extends Component {
                                 </div>
                             </div>
                             <div className="forw-wrapper_input pass2">
-                                <input className="inputfield pass" type={this.state.secondPassType} maxLength="8" value={confirm_password} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)} name="confirm_password" placeholder={languageManager.pass2}/>
+                                <input className="inputfield pass" type={this.state.secondPassType} maxLength="8" value={this.props.syncState.form.confirm_password} onChange={(e) => this.handleStepChange(e.target.name, e.target.value)} name="confirm_password" placeholder={languageManager.pass2}/>
                                 <span onClick={this.handleClick} data-type="secondPassType" className={this.state.secondPassType === 'password' ? 'show-pass' : 'hide-pass'}></span>
                             </div>
                             <ul className='req'>
-                                {Object.keys(languageManager.passtest).map((validationRule, index) =>
+                                {Object.keys(this.passtest).map(key => {
+                                    return (<li className={(this.props.syncState.errors.password && (this.props.syncState.errors.password[key] || this.props.syncState.errors.password.empty)) ? 'list' : 'ok'} key={key}>{this.passtest[key]}</li>)
+                                })}
+                                {/*{Object.keys(languageManager.passtest).map((validationRule, index) =>
                                     <li key={index} className={
                                         this.state.passwordErrors[validationRule] || !this.state.password.length
                                             ? 'list'
@@ -282,7 +297,7 @@ export default class Regform extends Component {
                                     }>
                                         {languageManager.passtest[validationRule]}
                                     </li>
-                                )}
+                                )}*/}
                             </ul>
                             <button onClick={this.handleForward} className='start'>{languageManager.button}</button>
                         </div>
@@ -299,14 +314,8 @@ export default class Regform extends Component {
                                 separateDialCode={true}
                                 onSelectFlag={this.handleSelectFlag}
                                 onPhoneNumberBlur={this.phoneNumberBlur}
-                                onPhoneNumberChange={(status, value, countryData, number, id) => {
-                                    if (value.length < 15) {
-                                        this.setState({
-                                            tel: value.replace(/^\s+|\s/g, ''),
-                                        })
-                                    }
-                                }}
-                                value={tel}
+                                onPhoneNumberChange={(status, value, countryData, number, id) => {value = value.replace(/\D/g,''); this.updateValue(value, 'phone_number')}}
+                                value={this.props.syncState.form.phone_number}
                             />
                             <button onClick={this.handleForward} className='start' >{languageManager.button_last}</button>
                         </div>

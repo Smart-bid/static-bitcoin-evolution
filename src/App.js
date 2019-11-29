@@ -14,21 +14,25 @@ export default class App extends Component {
         super(props);
 
         this.state = {
+            form: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                agree_2: true
+            },
+            errors: {},
             step: 1,
-            page: 'main',
+            page: 'main'
         };
 
-        this.handleStep = this.handleStep.bind(this);
         this.pageHandler = this.pageHandler.bind(this);
     }
 
+    syncForms = (form) => this.setState({form})
+    syncErrors = (errors) => this.setState({errors})
+
     handleStep = (step) => {
         this.setState({step})
-    };
-
-    handleSubmit = () => {
-        this.props.handleSubmit()
-        .then(() => this.setState({ step: 1 }))
     };
 
     pageHandler(page) {
@@ -62,7 +66,11 @@ export default class App extends Component {
         if (this.state.page === 'main') {
             return (
                 <div className='App'>
-                    <TopSection {...this.props} handleStep={this.handleStep} step={this.state.step}/>
+                    <TopSection {...this.props}
+                                handleStep={this.handleStep}
+                                syncForms={this.syncForms}
+                                syncErrors={this.syncErrors}
+                                syncState={this.state}/>
 
                     <MidSection languageManager={this.props.languageManager}/>
 

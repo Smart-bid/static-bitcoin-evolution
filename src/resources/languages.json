@@ -42,12 +42,12 @@
     "pass2": "Confirm Password",
     "button": "Next >",
     "button_last": "REGISTER NOW",
-    "passtest": {
-      "invalidlength": "The password must be 8 characters long.",
-      "nolowercase": "Must contain at least 1 letter.",
-      "nonumber": "Must contain at least 1 number.",
-      "nouppercase": "Must contain at least 1 capital letter."
-    },
+    "passtest": [
+      "The password must be 8 characters long.",
+      "Must contain at least 1 letter.",
+      "Must contain at least 1 number.",
+      "Must contain at least 1 capital letter."
+    ],
     "morebox": "Example: 12John34",
     "bcbid": [
       "bid",
