@@ -123,6 +123,9 @@ export default class Regform extends Component {
                 this.props.setLeadData(paramsToValidate)
                     .then(this.props.handleSubmit)
                     .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
+                this.setState({
+                    errors: []
+                });
             }
             else {
                 const fieldWithMessages = Object.keys(submitPhone.errors).find(field => submitPhone.errors[field].hasOwnProperty('messages'));
