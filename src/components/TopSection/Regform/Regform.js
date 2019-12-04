@@ -122,7 +122,7 @@ export default class Regform extends Component {
                 this.props.handleStep(this.props.step + 1);
                 this.props.setLeadData(paramsToValidate)
                     .then(this.props.handleSubmit)
-                    .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
+                    .then(res => (res.redirectUrl && res.success) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
                 this.setState({
                     errors: []
                 });
