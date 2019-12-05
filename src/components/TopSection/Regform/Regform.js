@@ -5,8 +5,6 @@ import 'react-intl-tel-input/dist/main.css'
 import { ReactComponent as Mark } from './excl.svg'
 import logo from '../../BottomSection/logo.png'
 
-import { Link } from 'react-router-dom'
-
 
 export default class Regform extends Component {
     constructor(props) {
@@ -185,6 +183,7 @@ export default class Regform extends Component {
     }
 
     handleStepChange = (name, value) => {
+        this.props.trackStartEdit();
         let errors = null;
         if (name === 'password') {
             const checkPassword = this.props.validateParams({
