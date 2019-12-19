@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.9.1-browsers
-    working_directory: ~/repo
+    working_directory: ~/btcevolutionpro.com
     steps:
       - checkout
       - add_ssh_keys
@@ -27,7 +27,7 @@ jobs:
       - run:
           name: deploy via scp
           command: |
-            scp -r ~/repo/build/* admin@95.216.16.250:~/web/btcevolutionpro.com/public_html
+            scp -r ~/btcevolutionpro.com/build/* admin@95.216.16.250:~/web/btcevolutionpro.com/public_html
 workflows:
   version: 2.1
   build-and-deploy:
