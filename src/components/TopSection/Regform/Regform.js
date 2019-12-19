@@ -5,8 +5,6 @@ import 'react-intl-tel-input/dist/main.css'
 import { ReactComponent as Mark } from './excl.svg'
 import logo from '../../BottomSection/logo.png'
 
-import { Link } from 'react-router-dom'
-
 
 export default class Regform extends Component {
     constructor(props) {
@@ -63,10 +61,6 @@ export default class Regform extends Component {
         })
     }
 
-    phoneValidate = (value) => {
-        return !/[^0-9\-\/]/.test(value);
-    }
-
     handleForward = (e) => {
         let form = e.target.parentElement;
         let paramsToValidate = {};
@@ -117,38 +111,26 @@ export default class Regform extends Component {
             let tel = form.querySelector('.tel');
             let phone_number = tel.value.replace(/^\s+|\s/g, '');
 
-            if (!this.phoneValidate(phone_number)) {
+            paramsToValidate = {
+                phone_number: phone_number,
+                phone_country_prefix: this.state.phone_country_prefix
+            };
+            let submitPhone = this.props.validateParams(paramsToValidate);
+            if (submitPhone.success) {
+                this.props.handleStep(this.props.step + 1);
+                this.props.setLeadData(paramsToValidate)
+                    .then(this.props.handleSubmit)
+                    .then(res => (res.redirectUrl && res.success) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
                 this.setState({
-                    errors: ['Enter only number']
+                    errors: []
                 });
-                return this.state.errors
             }
-            else if (phone_number.length > 3) {
-                paramsToValidate = {
-                    phone_number: phone_number,
-                    phone_country_prefix: this.state.phone_country_prefix
-                }
-
-                this.props.handleStep(this.props.step + 1)
-                let submitPhone = this.props.validateParams(paramsToValidate);
-                if (submitPhone.success) {
-                    this.props.setLeadData(paramsToValidate)
-                        .then(this.props.handleSubmit)
-                        .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.setState({responseError: res.error}, this.props.handleStep(this.props.step + 1)))
-                    this.setState({
-                        errors: []
-                    });
-                }
-                else{
-                    this.setState({
-                        errors: submitPhone.errors
-                    })
-                }
-            } else {
+            else {
+                const fieldWithMessages = Object.keys(submitPhone.errors).find(field => submitPhone.errors[field].hasOwnProperty('messages'));
+                const firstError = submitPhone.errors[fieldWithMessages].messages[0];
                 this.setState({
-                    errors: ['Enter phone number']
-                });
-                return this.state.errors
+                    errors: firstError
+                })
             }
         }
     };
@@ -201,6 +183,7 @@ export default class Regform extends Component {
     }
 
     handleStepChange = (name, value) => {
+        this.props.trackStartEdit();
         let errors = null;
         if (name === 'password') {
             const checkPassword = this.props.validateParams({
@@ -288,7 +271,7 @@ export default class Regform extends Component {
                         </div>
                         <div className='form-wrapper three'>
                             {this.state.errors && <div className="errors">
-                                {this.state.errors[0]}
+                                {this.state.errors}
                             </div>}
                             <IntlTelInput
                                 preferredCountries={[this.props.countryCode]}
